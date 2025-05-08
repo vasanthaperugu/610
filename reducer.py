@@ -1,28 +1,16 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import sys
 
-# maps words to their counts
 word2count = {}
 
-# input comes from STDIN
 for line in sys.stdin:
-    # remove leading and trailing whitespace
     line = line.strip()
-
-    # parse the input we got from mapper.py -- split on tabs
-    word, count = line.split('\t', 1)
-    # convert count (currently a string) to int
     try:
+        word, count = line.split('\t', 1)
         count = int(count)
+        word2count[word] = word2count.get(word, 0) + count
     except ValueError:
         continue
 
-    try:
-        word2count[word] = word2count[word]+count
-    except:
-        word2count[word] = count
-
-# write the tuples to stdout
-# Note: they are unsorted
-for word in word2count.keys():
-    print '%s\t%s'% ( word, word2count[word] )
+for word in word2count:
+    print(f'{word}\t{word2count[word]}')
